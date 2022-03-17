@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 
 const TourDescription = ({ tour }) => {
   const {
@@ -22,7 +23,9 @@ const TourDescription = ({ tour }) => {
                 <use href="/img/icons.svg#icon-calendar"></use>
               </svg>
               <span className="overview-box__label">Next date</span>
-              <span className="overview-box__text">{startDates[1]}</span>
+              <span className="overview-box__text">
+                {moment.utc(startDates[1]).format('Do MMM YYYY')}
+              </span>
             </div>
             <div className="overview-box__detail">
               <svg className="overview-box__icon">

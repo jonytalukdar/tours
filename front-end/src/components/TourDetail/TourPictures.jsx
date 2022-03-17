@@ -5,7 +5,7 @@ const TourPictures = ({ images }) => {
     <section className="section-pictures">
       {images?.map((image, index) => {
         return (
-          <div className="picture-box">
+          <div className="picture-box" key={index}>
             <img
               className={`picture-box__img picture-box__img--${index + 1}`}
               src={`/img/tours/${image}`}

@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactMapboxGl, { Layer, Feature, Marker, Popup } from 'react-mapbox-gl';
+import ReactMapboxGl, { Marker, Popup } from 'react-mapbox-gl';
 
 import 'mapbox-gl/dist/mapbox-gl.css';
 
@@ -12,21 +12,22 @@ const MapBox = ({ locations, startLocation }) => {
   return (
     <section className="section-map">
       <Map
+        // fitBounds={lnglat}
+        // fitBoundsOptions={{
+        //   padding: { top: 200, bottom: 200, left: 100, right: 100 },
+        // }}
         center={startLocation.coordinates}
         zoom={[5]}
         style="mapbox://styles/jonytalukdar/cl0uoz069002b14o3p3jr8xut"
         containerStyle={{
-          height: '100vh',
-          width: '100vw',
+          height: '100%',
+          width: '100%',
         }}
       >
-        {/* <Layer type="symbol" id="marker" layout={{ 'icon-image': 'marker-15' }}>
-          <Feature coordinates={startLocation.coordinates} />
-        </Layer> */}
         {locations?.map((loc, index) => {
           return (
-            <>
-              <Marker key={index} coordinates={loc.coordinates}>
+            <div key={index}>
+              <Marker coordinates={loc.coordinates}>
                 <div className="marker"></div>
               </Marker>
               <Popup
@@ -39,7 +40,7 @@ const MapBox = ({ locations, startLocation }) => {
               >
                 <p>{`Day ${loc.day} ${loc.description}`}</p>
               </Popup>
-            </>
+            </div>
           );
         })}
       </Map>

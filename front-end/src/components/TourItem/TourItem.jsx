@@ -50,7 +50,7 @@ const TourItem = ({ tour }) => {
           <svg className="card__icon">
             <use href="img/icons.svg#icon-calendar"></use>
           </svg>
-          <span>{startDates[0].toLocaleString('en-us')}</span>
+          <span>{moment.utc(startDates[0]).format('Do MMM YYYY')}</span>
         </div>
         <div className="card__data">
           <svg className="card__icon">

@@ -4,13 +4,13 @@ import logo from '../../assets/img/logo-white.png';
 
 const Header = () => {
   return (
-    <header class="header">
-      <nav class="nav nav--tours">
-        <Link to="/" class="nav__el">
+    <header className="header">
+      <nav className="nav nav--tours">
+        <Link to="/" className="nav__el">
           All tours
         </Link>
-        {/* <form class="nav__search">
-          <button class="nav__search-btn">
+        {/* <form className="nav__search">
+          <button className="nav__search-btn">
             <svg>
               <use href={img}></use>
             </svg>
@@ -18,29 +18,29 @@ const Header = () => {
           <input
             type="text"
             placeholder="Search tours"
-            class="nav__search-input"
+            className="nav__search-input"
           />
         </form> */}
       </nav>
-      <div class="header__logo">
+      <div className="header__logo">
         <Link to={'/'}>
           {' '}
           <img src={logo} alt="Natours logo" />
         </Link>
       </div>
-      <nav class="nav nav--user">
-        {/* <a href="#" class="nav__el">
+      <nav className="nav nav--user">
+        {/* <a href="#" className="nav__el">
           My bookings
         </a>
-        <a href="#" class="nav__el">
-          <img src="img/user.jpg" alt="User photo" class="nav__user-img" />
+        <a href="#" className="nav__el">
+          <img src="img/user.jpg" alt="User photo" className="nav__user-img" />
           <span>Jonas</span>
         </a> */}
 
-        <Link to={'/login'} class="nav__el">
+        <Link to={'/login'} className="nav__el">
           Log in
         </Link>
-        <Link to={'/signup'} class="nav__el nav__el--cta">
+        <Link to={'/signup'} className="nav__el nav__el--cta">
           Sign up
         </Link>
       </nav>

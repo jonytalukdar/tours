@@ -3,11 +3,11 @@ import logo from '../../assets/img/logo-green.png';
 
 const Footer = () => {
   return (
-    <div class="footer">
-      <div class="footer__logo">
+    <div className="footer">
+      <div className="footer__logo">
         <img src={logo} alt="Natours logo" />
       </div>
-      <ul class="footer__nav">
+      <ul className="footer__nav">
         <li>
           <a href="#">About us</a>
         </li>
@@ -24,7 +24,7 @@ const Footer = () => {
           <a href="#">Contact</a>
         </li>
       </ul>
-      <p class="footer__copyright">&copy; Jony. All rights reserved.</p>
+      <p className="footer__copyright">&copy; Jony. All rights reserved.</p>
     </div>
   );
 };
