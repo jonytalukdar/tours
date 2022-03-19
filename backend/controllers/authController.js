@@ -14,10 +14,11 @@ const createSendToken = async (user, statusCode, res) => {
     ),
     httpOnly: true,
   };
-  if (process.env.NODE_EN === 'production') cookieOptions.secure = true;
+  if (process.env.NODE_ENV === 'production') cookieOptions.secure = true;
+
   res.cookie('jwt', token, cookieOptions);
 
-  //hide password
+  // Remove password from output
   user.password = undefined;
 
   res.status(statusCode).json({ status: 'success', data: user, token });
@@ -52,7 +53,12 @@ const login = catchAsync(async (req, res, next) => {
 
   // const token = await user.createToken(user._id);
 
-  // res.status(200).json({ status: 'success', token });
+  // res.cookie('token', token, {
+  //   expires: new Date(Date.now() + 300000),
+  //   httpOnly: true,
+  // });
+
+  // res.status(200).json({ status: 'success', user, token });
   createSendToken(user, 200, res);
 });
 

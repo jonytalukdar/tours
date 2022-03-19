@@ -10,8 +10,11 @@ const authentication = catchAsync(async (req, res, next) => {
 
   //check if the token is exist
   const authHeaders = req.headers.authorization;
+
   if (authHeaders && authHeaders.startsWith('Bearer')) {
     token = authHeaders.split(' ')[1];
+  } else if (req.cookies.jwt) {
+    token = req.cookies.jwt;
   }
 
   if (!token) {

@@ -8,6 +8,7 @@ const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
 
 const AppError = require('./utils/appError');
 const errorHandler = require('./controllers/errorController.js');
@@ -16,6 +17,7 @@ const usersRoutes = require('./routes/usersRoutes');
 const reviewRoutes = require('./routes/reviewRoutes');
 
 const app = express();
+app.use(cookieParser());
 
 //limiter
 const limiter = rateLimit({
