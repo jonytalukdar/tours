@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../../assets/img/logo-white.png';
 
@@ -30,12 +29,13 @@ const Header = () => {
       </div>
       <nav className="nav nav--user">
         {/* <a href="#" className="nav__el">
-          My bookings
-        </a>
-        <a href="#" className="nav__el">
-          <img src="img/user.jpg" alt="User photo" className="nav__user-img" />
-          <span>Jonas</span>
-        </a> */}
+            <img
+              src={`/img/users/${user.photo}`}
+              alt="User photo"
+              className="nav__user-img"
+            />
+            <span>{user.name.split(' ')[0]}</span>
+          </a> */}
 
         <Link to={'/login'} className="nav__el">
           Log in

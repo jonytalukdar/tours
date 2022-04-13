@@ -1,31 +1,16 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const history = useHistory();
-
-  const login = async (data) => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     try {
-      const response = await fetch('/api/v1/users/login', {
-        method: 'POST',
-        body: JSON.stringify(data),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      const user = await response.json();
-      console.log(user);
+      // history.push('/');
     } catch (error) {
       console.log(error);
     }
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    login({ email, password });
   };
 
   return (
@@ -63,7 +48,12 @@ const Login = () => {
             />
           </div>
           <div className="form__group">
-            <button type="submit" className="btn btn--green">
+            <button
+              type="submit"
+              // disabled={isLoading}
+              className="btn btn--green"
+            >
+              {/* {isLoading ? 'Loading... ' : ' Login'} */}
               Login
             </button>
           </div>

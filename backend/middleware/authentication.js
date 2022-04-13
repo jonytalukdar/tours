@@ -54,4 +54,29 @@ const restricTo = (...roles) => {
   };
 };
 
-module.exports = { authentication, restricTo };
+const isLoggedIn = catchAsync(async (req, res, next) => {
+  const token = req.cookies.jwt;
+
+  if (token) {
+    //verification token
+    const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
+
+    //check the user exists
+    const currentUser = await User.findById({ _id: decoded.id });
+    if (!currentUser) {
+      return next();
+    }
+
+    //if user changed password after token was issued
+    if (currentUser.changedPasswordAfter(decoded.iat)) {
+      return next();
+    }
+
+    //grand access to the protected route
+    req.user = currentUser;
+    return next();
+  }
+  next();
+});
+
+module.exports = { authentication, restricTo, isLoggedIn };

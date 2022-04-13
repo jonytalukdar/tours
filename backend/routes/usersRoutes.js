@@ -17,7 +17,11 @@ const {
   deleteUser,
 } = require('../controllers/usersControllers');
 
-const { authentication, restricTo } = require('../middleware/authentication');
+const {
+  authentication,
+  restricTo,
+  isLoggedIn,
+} = require('../middleware/authentication');
 
 const router = express.Router();
 
@@ -39,7 +43,7 @@ router.patch('/updateProfile', updateProfile);
 //delete me
 router.delete('/deleteMe', deleteMe);
 //get me
-router.get('/me', getMe, getSingleUser);
+router.get('/me', getMe, isLoggedIn, getSingleUser);
 
 //// protect by admin after this middlware
 router.use(restricTo('admin'));

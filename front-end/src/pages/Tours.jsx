@@ -1,17 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { TourItem } from '../components';
+import { fetchTours } from '../services';
 
 const Tours = () => {
-  const [tours, setTours] = useState([]);
+  const dispatch = useDispatch();
+  const { tours, status } = useSelector((state) => state.tour);
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/v1/tours')
-      .then((res) => res.json())
-      .then((data) => {
-        setTours(data.data);
-      });
-  }, []);
+    dispatch(fetchTours());
+  }, [dispatch]);
+
+  if (status === 'loading') {
+    return <h1>Loading...</h1>;
+  }
 
   return (
     <main className="main">
