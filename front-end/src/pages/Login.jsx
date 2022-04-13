@@ -1,13 +1,19 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import { signin } from '../services';
 
 const Login = () => {
+  const dispatch = useDispatch();
+  const history = useHistory();
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // history.push('/');
+      dispatch(signin({ userData: { email, password }, history }));
     } catch (error) {
       console.log(error);
     }

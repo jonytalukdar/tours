@@ -1,7 +1,12 @@
 import { Link } from 'react-router-dom';
 import logo from '../../assets/img/logo-white.png';
+import { useSelector } from 'react-redux';
+import cookie from 'js-cookie';
 
 const Header = () => {
+  const { user } = useSelector((state) => state.auth);
+  const token = cookie.get('jwt');
+
   return (
     <header className="header">
       <nav className="nav nav--tours">
@@ -28,21 +33,30 @@ const Header = () => {
         </Link>
       </div>
       <nav className="nav nav--user">
-        {/* <a href="#" className="nav__el">
-            <img
-              src={`/img/users/${user.photo}`}
-              alt="User photo"
-              className="nav__user-img"
-            />
-            <span>{user.name.split(' ')[0]}</span>
-          </a> */}
+        {user && token && (
+          <>
+            <a href="#" className="nav__el">
+              <img
+                src={`/img/users/${user.photo}`}
+                alt="User photo"
+                className="nav__user-img"
+              />
+              <span>{user.name.split(' ')[0]}</span>
+            </a>{' '}
+          </>
+        )}
 
-        <Link to={'/login'} className="nav__el">
-          Log in
-        </Link>
-        <Link to={'/signup'} className="nav__el nav__el--cta">
-          Sign up
-        </Link>
+        {!user ||
+          (!token && (
+            <>
+              <Link to={'/login'} className="nav__el">
+                Log in
+              </Link>
+              <Link to={'/signup'} className="nav__el nav__el--cta">
+                Sign up
+              </Link>
+            </>
+          ))}
       </nav>
     </header>
   );
