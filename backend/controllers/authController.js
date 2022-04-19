@@ -48,7 +48,9 @@ const login = catchAsync(async (req, res, next) => {
   const correctPassword = await user.comparePassword(password);
 
   if (!correctPassword) {
-    return next(new AppError('Invalid credientials', 401));
+    return next(
+      new AppError('Invalid credientials, Incorrect password or email', 401)
+    );
   }
 
   // const token = await user.createToken(user._id);

@@ -17,7 +17,6 @@ const usersRoutes = require('./routes/usersRoutes');
 const reviewRoutes = require('./routes/reviewRoutes');
 
 const app = express();
-app.use(cookieParser());
 
 //limiter
 const limiter = rateLimit({
@@ -31,6 +30,7 @@ const limiter = rateLimit({
 //middleware
 app.use(helmet());
 app.use(express.json({ limit: '10kb' }));
+app.use(cookieParser());
 app.use(morgan('dev'));
 app.use(limiter);
 app.use(cors());
@@ -52,6 +52,11 @@ app.use(
     ],
   })
 );
+
+app.use((req, res, next) => {
+  console.log(req.cookies);
+  next();
+});
 
 //routes
 app.use('/api/v1/tours', tourRoutes);

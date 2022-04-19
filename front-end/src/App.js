@@ -3,6 +3,7 @@ import React from 'react';
 import { Layout } from './components';
 import { Switch, Route } from 'react-router-dom';
 import { Login, Signup, TourDetails, Tours } from './pages';
+import PrivateRoute from './pages/PrivateRoute';
 
 const App = () => {
   return (
@@ -10,9 +11,14 @@ const App = () => {
       <Layout>
         <Switch>
           <Route path="/" exact component={Tours} />
+
           <Route path="/login" component={Login} />
+
           <Route path="/signup" component={Signup} />
-          <Route path="/tour/:slug" component={TourDetails} />
+
+          <PrivateRoute>
+            <Route path="/tour/:slug" component={TourDetails} />
+          </PrivateRoute>
         </Switch>
       </Layout>
     </>

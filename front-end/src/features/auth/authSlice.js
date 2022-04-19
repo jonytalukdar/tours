@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { signin } from '../../services';
+import cookie from 'js-cookie';
 
 const initialState = {
   user: JSON.parse(localStorage.getItem('user')) || null,
@@ -10,6 +11,13 @@ const initialState = {
 const authSlice = createSlice({
   name: 'auth',
   initialState,
+  reducers: {
+    logOut: (state) => {
+      localStorage.removeItem('user');
+      cookie.remove('jwt');
+      state.user = null;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(signin.pending, (state, action) => {
@@ -29,5 +37,7 @@ const authSlice = createSlice({
       });
   },
 });
+
+export const { logOut } = authSlice.actions;
 
 export default authSlice.reducer;
