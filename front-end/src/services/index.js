@@ -43,3 +43,12 @@ export const signin = createAsyncThunk(
     }
   }
 );
+
+export const updateProfile = createAsyncThunk('update', async (userData) => {
+  try {
+    const { data } = await API.patch('/users/updateProfile', userData);
+    return data;
+  } catch (error) {
+    return error.response.data.message;
+  }
+});

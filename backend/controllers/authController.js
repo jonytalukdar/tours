@@ -196,7 +196,7 @@ const updateProfile = catchAsync(async (req, res, next) => {
   });
 
   //send response
-  res.status(200).json({ status: 'success', data: { user: updatedUser } });
+  res.status(200).json({ status: 'success', data: updatedUser });
 });
 
 ///delete me

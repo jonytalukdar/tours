@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { signin } from '../../services';
+import { signin, updateProfile } from '../../services';
 import cookie from 'js-cookie';
 
 const initialState = {
@@ -34,6 +34,14 @@ const authSlice = createSlice({
       .addCase(signin.rejected, (state, action) => {
         state.status = 'rejected';
         state.error = action.error.message;
+      })
+      .addCase(updateProfile.fulfilled, (state, action) => {
+        state.status = 'success';
+        localStorage.setItem(
+          'user',
+          JSON.stringify({ ...action?.payload?.data })
+        );
+        state.user = action.payload.data;
       });
   },
 });

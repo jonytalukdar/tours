@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import logo from '../../assets/img/logo-white.png';
 import { useDispatch, useSelector } from 'react-redux';
 import { logOut } from '../../features/auth/authSlice';
@@ -6,8 +6,14 @@ import cookie from 'js-cookie';
 
 const Header = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
   const { user } = useSelector((state) => state.auth);
   const token = cookie.get('jwt');
+
+  const handleLogout = () => {
+    dispatch(logOut());
+    history.push('/');
+  };
 
   return (
     <header className="header">
@@ -37,18 +43,15 @@ const Header = () => {
       <nav className="nav nav--user">
         {user && token && (
           <>
-            <a href="#" className="nav__el">
+            <Link to={'/me'} className="nav__el">
               <img
                 src={`/img/users/${user.photo}`}
                 alt=""
                 className="nav__user-img"
               />
               <span>{user.name.split(' ')[0]}</span>
-            </a>
-            <button
-              className="nav__el nav__el--cta"
-              onClick={() => dispatch(logOut())}
-            >
+            </Link>
+            <button className="nav__el nav__el--cta" onClick={handleLogout}>
               Logout
             </button>
           </>
