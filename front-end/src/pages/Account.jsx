@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateProfile } from '../services';
+import { updatePassword, updateProfile } from '../services';
 
 const Account = () => {
   const dispatch = useDispatch();
@@ -9,10 +9,20 @@ const Account = () => {
   const [name, setName] = useState(user?.name);
   const [email, setEmail] = useState(user?.email);
 
-  const handleSubmit = (e) => {
+  const [currentPassword, setCurrentPassword] = useState('');
+  const [password, setPassword] = useState('');
+  const [passwordConfirm, setPasswordConfirm] = useState('');
+
+  const handleUpdateProfile = (e) => {
     e.preventDefault();
 
     dispatch(updateProfile({ name, email }));
+  };
+
+  const handleChangePassword = (e) => {
+    e.preventDefault();
+
+    dispatch(updatePassword({ currentPassword, password, passwordConfirm }));
   };
 
   return (
@@ -101,7 +111,10 @@ const Account = () => {
               Your account settings
             </h2>
 
-            <form className="form form-user-data" onSubmit={handleSubmit}>
+            <form
+              className="form form-user-data"
+              onSubmit={handleUpdateProfile}
+            >
               <div className="form__group">
                 <label className="form__label" htmlFor="name">
                   Name
@@ -148,7 +161,11 @@ const Account = () => {
           <div className="line">&nbsp;</div>
           <div className="user-view__form-container">
             <h2 className="heading-secondary ma-bt-md">Password change</h2>
-            <form className="form form-user-settings">
+
+            <form
+              className="form form-user-settings"
+              onSubmit={handleChangePassword}
+            >
               <div className="form__group">
                 <label className="form__label" htmlFor="password-current">
                   Current password
@@ -159,8 +176,9 @@ const Account = () => {
                   type="password"
                   placeholder="••••••••"
                   required="required"
-                  // minLength="8"
                   minLength="8"
+                  value={currentPassword}
+                  onChange={(e) => setCurrentPassword(e.target.value)}
                 />
               </div>
               <div className="form__group">
@@ -174,6 +192,8 @@ const Account = () => {
                   placeholder="••••••••"
                   required="required"
                   minLength="8"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
               <div className="form__group ma-bt-lg">
@@ -187,10 +207,12 @@ const Account = () => {
                   placeholder="••••••••"
                   required="required"
                   minLength="8"
+                  value={passwordConfirm}
+                  onChange={(e) => setPasswordConfirm(e.target.value)}
                 />
               </div>
               <div className="form__group right">
-                <button className="btn btn--small btn--green">
+                <button className="btn btn--small btn--green" type="submit">
                   Save password
                 </button>
               </div>

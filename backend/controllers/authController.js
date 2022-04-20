@@ -141,7 +141,7 @@ const resetPassword = catchAsync(async (req, res, next) => {
 // update password
 const updatePassword = catchAsync(async (req, res, next) => {
   //get user from the collection
-  const user = await User.findById(req.user.id);
+  const user = await User.findById(req.user.id).select('+password');
   if (!user) {
     return next(new AppError('User does not exit', 401));
   }

@@ -12,7 +12,7 @@ const Header = () => {
 
   const handleLogout = () => {
     dispatch(logOut());
-    history.push('/');
+    history.push('/login');
   };
 
   return (

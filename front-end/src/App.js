@@ -5,24 +5,22 @@ import { Switch, Route } from 'react-router-dom';
 import { Login, Signup, TourDetails, Tours } from './pages';
 import PrivateRoute from './pages/PrivateRoute';
 import Account from './pages/Account';
+import Status from './utils/Status';
 
 const App = () => {
   return (
     <>
       <Layout>
+        <Status />
         <Switch>
-          <Route path="/" exact component={Tours} />
+          <Route exact path="/" component={Tours} />
 
           <Route path="/login" component={Login} />
-
           <Route path="/signup" component={Signup} />
 
           <PrivateRoute>
-            <Route path="/me" component={Account} />
-          </PrivateRoute>
-
-          <PrivateRoute>
-            <Route path="/tour/:slug" component={TourDetails} />
+            <Route exact path="/me" component={Account} />
+            <Route exact path="/tour/:slug" component={TourDetails} />
           </PrivateRoute>
         </Switch>
       </Layout>

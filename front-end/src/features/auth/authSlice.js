@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { signin, updateProfile } from '../../services';
+import { signin, updatePassword, updateProfile } from '../../services';
 import cookie from 'js-cookie';
 
 const initialState = {
@@ -20,6 +20,7 @@ const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      // for signin
       .addCase(signin.pending, (state, action) => {
         state.status = 'loading';
       })
@@ -36,6 +37,10 @@ const authSlice = createSlice({
         state.error = action.payload;
       })
 
+      //update profile
+      .addCase(updateProfile.pending, (state) => {
+        state.status = 'loading';
+      })
       .addCase(updateProfile.fulfilled, (state, action) => {
         state.status = 'success';
         localStorage.setItem(
@@ -43,6 +48,22 @@ const authSlice = createSlice({
           JSON.stringify({ ...action?.payload?.data })
         );
         state.user = action.payload.data;
+      })
+      .addCase(updateProfile.rejected, (state, action) => {
+        state.status = 'rejected';
+        state.error = action.payload;
+      })
+
+      ///update password
+      .addCase(updatePassword.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(updatePassword.fulfilled, (state, action) => {
+        state.status = 'success';
+      })
+      .addCase(updatePassword.rejected, (state, action) => {
+        state.status = 'rejected';
+        state.error = action.payload;
       });
   },
 });

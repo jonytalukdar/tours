@@ -38,17 +38,33 @@ export const signin = createAsyncThunk(
 
       history.push('/');
       return data;
-    } catch (err) {
-      return rejectWithValue(err.response.data.message);
+    } catch (error) {
+      return rejectWithValue(error.response.data.message);
     }
   }
 );
 
-export const updateProfile = createAsyncThunk('update', async (userData) => {
-  try {
-    const { data } = await API.patch('/users/updateProfile', userData);
-    return data;
-  } catch (error) {
-    return error.response.data.message;
+export const updateProfile = createAsyncThunk(
+  'updateProfile',
+  async (userData, { rejectWithValue }) => {
+    try {
+      const { data } = await API.patch('/users/updateProfile', userData);
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.response.data.message);
+    }
   }
-});
+);
+
+export const updatePassword = createAsyncThunk(
+  'updatePassword',
+  async (userData, { rejectWithValue }) => {
+    try {
+      const { data } = await API.patch('/users/updatePassword', userData);
+      Cookies.set('jwt', data.token);
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.response.data.message);
+    }
+  }
+);

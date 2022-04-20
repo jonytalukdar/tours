@@ -1,11 +1,13 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 
 import { TourItem } from '../components';
 import { fetchTours } from '../services';
 
 const Tours = () => {
   const dispatch = useDispatch();
+
   const { tours, status } = useSelector((state) => state.tour);
 
   useEffect(() => {
