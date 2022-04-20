@@ -57,7 +57,7 @@ const Header = () => {
           </>
         )}
 
-        {!user && !token && (
+        {(!user || !token) && (
           <>
             <Link to={'/login'} className="nav__el">
               Log in

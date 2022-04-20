@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { signin } from '../services';
+import { toast } from 'react-toastify';
 
 const Login = () => {
   const dispatch = useDispatch();
   const history = useHistory();
+  const { error, status } = useSelector((state) => state.auth);
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -18,6 +20,12 @@ const Login = () => {
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    if (status === 'rejected') {
+      toast.error(<h2>{error}</h2>);
+    }
+  }, [status, error]);
 
   return (
     <main className="main">

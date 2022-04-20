@@ -31,15 +31,15 @@ export const fetchTours = createAsyncThunk('tours/fetchTours', async () => {
 
 export const signin = createAsyncThunk(
   'signin',
-  async ({ userData, history }) => {
+  async ({ userData, history }, { rejectWithValue }) => {
     try {
       const { data } = await API.post('/users/login', userData);
       Cookies.set('jwt', data.token);
 
       history.push('/');
       return data;
-    } catch (error) {
-      return error.response.data.message;
+    } catch (err) {
+      return rejectWithValue(err.response.data.message);
     }
   }
 );
