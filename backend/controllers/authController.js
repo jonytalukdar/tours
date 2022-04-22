@@ -223,8 +223,8 @@ const filterObj = (obj, ...allowAllFields) => {
 
 //update profile
 const updateProfile = catchAsync(async (req, res, next) => {
-  console.log(req.file);
-  console.log(req.body);
+  // console.log(req.file);
+  // console.log(req.body);
 
   //send error if user send password and confirmPassword
   const { password, passwordConfirm } = req.body;
