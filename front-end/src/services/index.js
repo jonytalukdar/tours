@@ -47,8 +47,13 @@ export const signin = createAsyncThunk(
 export const updateProfile = createAsyncThunk(
   'updateProfile',
   async (userData, { rejectWithValue }) => {
+    const formData = new FormData();
+    formData.append('name', userData.name);
+    formData.append('email', userData.email);
+    formData.append('photo', userData.photo);
+
     try {
-      const { data } = await API.patch('/users/updateProfile', userData);
+      const { data } = await API.patch('/users/updateProfile', formData);
       return data;
     } catch (error) {
       return rejectWithValue(error.response.data.message);

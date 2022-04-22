@@ -8,6 +8,7 @@ const Account = () => {
 
   const [name, setName] = useState(user?.name);
   const [email, setEmail] = useState(user?.email);
+  const [photo, setPhoto] = useState();
 
   const [currentPassword, setCurrentPassword] = useState('');
   const [password, setPassword] = useState('');
@@ -16,7 +17,7 @@ const Account = () => {
   const handleUpdateProfile = (e) => {
     e.preventDefault();
 
-    dispatch(updateProfile({ name, email }));
+    dispatch(updateProfile({ name, email, photo }));
   };
 
   const handleChangePassword = (e) => {
@@ -147,9 +148,13 @@ const Account = () => {
                   src={`/img/users/${user?.photo}`}
                   alt="User"
                 />
-                <a className="btn-text" href="">
+                {/* <a className="btn-text" href="">
                   Choose new photo
-                </a>
+                </a> */}
+                <input
+                  type="file"
+                  onChange={(e) => setPhoto(e.target.files[0])}
+                />
               </div>
               <div className="form__group right">
                 <button className="btn btn--small btn--green" type="submit">
