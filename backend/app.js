@@ -53,11 +53,6 @@ app.use(
   })
 );
 
-app.use((req, res, next) => {
-  console.log(req.cookies);
-  next();
-});
-
 //routes
 app.use('/api/v1/tours', tourRoutes);
 app.use('/api/v1/users', usersRoutes);

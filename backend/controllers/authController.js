@@ -2,6 +2,35 @@ const User = require('../model/userModel');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 const crypto = require('crypto');
+const multer = require('multer');
+
+//for multer storage
+const multerStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, '../front-end/public/img/users');
+  },
+  filename: (req, file, cb) => {
+    const extn = file.mimetype.split('/')[1];
+    cb(null, `user-${req.user.id}-${Date.now()}.${extn}`);
+  },
+});
+
+//for multer filter
+const multerFilter = (req, file, cb) => {
+  if (file.mimetype.startsWith('image')) {
+    cb(null, true);
+  } else {
+    cb(new AppError('Not an image, Please upload an image', 400), false);
+  }
+};
+
+const upload = multer({
+  storage: multerStorage,
+  fileFilter: multerFilter,
+});
+
+const uploadUserPhoto = upload.single('photo');
+
 const sendEmail = require('../utils/email');
 
 //create token and send response
@@ -175,6 +204,9 @@ const filterObj = (obj, ...allowAllFields) => {
 
 //update profile
 const updateProfile = catchAsync(async (req, res, next) => {
+  console.log(req.file);
+  console.log(req.body);
+
   //send error if user send password and confirmPassword
   const { password, passwordConfirm } = req.body;
   if (password || passwordConfirm) {
@@ -188,6 +220,7 @@ const updateProfile = catchAsync(async (req, res, next) => {
 
   //filter out unwanted fileds value
   const filteredBody = filterObj(req.body, 'name', 'email');
+  if (req.file) filteredBody.photo = req.file.filename;
 
   //update user
   const updatedUser = await User.findByIdAndUpdate(req.user.id, filteredBody, {
@@ -221,4 +254,5 @@ module.exports = {
   updateProfile,
   deleteMe,
   getMe,
+  uploadUserPhoto,
 };
