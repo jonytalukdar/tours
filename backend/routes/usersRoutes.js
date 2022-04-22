@@ -9,6 +9,7 @@ const {
   deleteMe,
   getMe,
   uploadUserPhoto,
+  resizeUserPhoto,
 } = require('../controllers/authController');
 
 const {
@@ -40,7 +41,7 @@ router.use(authentication);
 //update password
 router.patch('/updatePassword', updatePassword);
 //update profile
-router.patch('/updateProfile', uploadUserPhoto, updateProfile);
+router.patch('/updateProfile', uploadUserPhoto, resizeUserPhoto, updateProfile);
 //delete me
 router.delete('/deleteMe', deleteMe);
 //get me
