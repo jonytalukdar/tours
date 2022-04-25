@@ -1,4 +1,6 @@
 const Tour = require('../model/tourModel');
+const multer = require('multer');
+const sharp = require('sharp');
 const catchAsync = require('../utils/catchAsync');
 const {
   deleteOne,
@@ -8,6 +10,33 @@ const {
   getAll,
 } = require('../controllers/handlerFactory');
 const AppError = require('../utils/appError');
+
+const multerStorage = multer.memoryStorage();
+
+//for multer filter
+const multerFilter = (req, file, cb) => {
+  if (file.mimetype.startsWith('image')) {
+    cb(null, true);
+  } else {
+    cb(new AppError('Not an image, Please upload an image', 400), false);
+  }
+};
+
+const upload = multer({
+  storage: multerStorage,
+  fileFilter: multerFilter,
+});
+
+//for image uplaod
+const uploadTourImages = upload.fields([
+  { name: 'imageCover', maxCount: 1 },
+  { name: 'images', maxCount: 3 },
+]);
+
+const resizeTourImages = (req, res, next) => {
+  console.log(req.files);
+  next();
+};
 
 //alias top 5 cheap tour
 const aliasTopTours = (req, res, next) => {
@@ -171,4 +200,6 @@ module.exports = {
   getMonthlyPlan,
   getToursWithIn,
   getDistances,
+  uploadTourImages,
+  resizeTourImages,
 };
