@@ -33,10 +33,25 @@ const uploadTourImages = upload.fields([
   { name: 'images', maxCount: 3 },
 ]);
 
-const resizeTourImages = (req, res, next) => {
-  console.log(req.files);
+const resizeTourImages = catchAsync(async (req, res, next) => {
+  // console.log(req.files);
+
+  if (!req.files.imageCover || !req.files.images) return next();
+
+  //1 for cover image
+
+  req.body.imageCover = `tour-${req.params.id}-${Date.now()}-cover.jpeg`;
+
+  await sharp(req.files.imageCover[0].buffer)
+    .resize(2000, 1333)
+    .toFormat('jpeg')
+    .jpeg({ quality: 90, force: true })
+    .toFile(`../front-end/public/img/tours/${req.body.imageCover}`);
+
+  //2 for images
+
   next();
-};
+});
 
 //alias top 5 cheap tour
 const aliasTopTours = (req, res, next) => {
